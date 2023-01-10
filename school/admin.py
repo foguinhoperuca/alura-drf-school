@@ -1,5 +1,5 @@
 from django.contrib import admin
-from school.models import Student, Course
+from school.models import Student, Course, Enrollment
 
 
 class Students(admin.ModelAdmin):
@@ -15,5 +15,12 @@ class Courses(admin.ModelAdmin):
     search_fields = ('course_code',)
 
 
+class Enrollments(admin.ModelAdmin):
+    list_display = ('id', 'student', 'course', 'period')
+    list_display_links = ('id', 'student', 'course')
+    search_fields = ('period',)
+
+
 admin.site.register(Student, Students)
 admin.site.register(Course, Courses)
+admin.site.register(Enrollment, Enrollments)
