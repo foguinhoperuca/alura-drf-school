@@ -1,0 +1,16 @@
+Django
+python-dotenv
+termcolor
+validate-docbr
+pytest
+pytest-cov
+psycopg2
+psycopg2-binary
+pylint-django
+djangorestframework
+markdown
+django-filter
+pyyaml
+uritemplate
+pygments
+django-guardian
