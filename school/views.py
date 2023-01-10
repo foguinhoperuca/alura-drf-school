@@ -4,8 +4,7 @@ from django.http import JsonResponse
 def students(request):
     if request.method == 'GET':
         student = {
-            'id': 1,
-            'name': 'Ichigo'
+            'id': 1
         }
 
         return JsonResponse(student)
