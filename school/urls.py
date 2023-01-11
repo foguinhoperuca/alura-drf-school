@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from school.views import StudentViewSet, CourseViewSet, EnrollmentViewSet
+from school.views import StudentViewSet, CourseViewSet, EnrollmentViewSet, ListEnrollmentsStudents, ListStudentsEnrollments
 
 router = DefaultRouter()
 router.register('students', StudentViewSet, basename='Students')
@@ -9,4 +9,6 @@ router.register('enrollments', EnrollmentViewSet, basename='Enrollments')
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('student/<int:pk>/enrollments/', ListEnrollmentsStudents.as_view()),
+    path('course/<int:pk>/enrollments/', ListStudentsEnrollments.as_view())
 ]
