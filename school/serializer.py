@@ -47,3 +47,9 @@ class ListStudentsEnrollmentsSerializer(ModelSerializer):
     class Meta:
         model = Enrollment
         fields = ['course', 'student_name', 'student_cpf', 'student_rg', 'student_birthday']
+
+
+class StudentSerializerV2(ModelSerializer):
+    class Meta:
+        model = Student
+        fields = ['id', 'name', 'rg', 'cpf', 'birthday', 'mobile']

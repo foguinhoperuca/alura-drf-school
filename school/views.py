@@ -1,16 +1,22 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import ListAPIView
 from rest_framework.authentication import BasicAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
 from school.models import Student, Course, Enrollment
-from school.serializer import StudentSerializer, CourseSerializer, EnrollmentSerializer, ListEnrollmentsStudentsSerializer, ListStudentsEnrollmentsSerializer
+from school.serializer import StudentSerializer, StudentSerializerV2, CourseSerializer, EnrollmentSerializer, ListEnrollmentsStudentsSerializer, ListStudentsEnrollmentsSerializer
 
 
 class StudentViewSet(ModelViewSet):
     queryset = Student.objects.all()
-    serializer_class = StudentSerializer
+    # serializer_class = StudentSerializer
     authentication_classes = [BasicAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, DjangoModelPermissions]
+
+    def get_serializer_class(self):
+        if self.request.version == 'v2':
+            return StudentSerializerV2
+        else:
+            return StudentSerializer
 
 
 class CourseViewSet(ModelViewSet):
@@ -23,7 +29,7 @@ class EnrollmentViewSet(ModelViewSet):
     queryset = Enrollment.objects.all()
     serializer_class = EnrollmentSerializer
     authentication_classes = [BasicAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, DjangoModelPermissions]
 
 
 class ListEnrollmentsStudents(ListAPIView):
@@ -32,7 +38,7 @@ class ListEnrollmentsStudents(ListAPIView):
 
     serializer_class = ListEnrollmentsStudentsSerializer
     authentication_classes = [BasicAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, DjangoModelPermissions]
 
 
 class ListStudentsEnrollments(ListAPIView):
@@ -41,4 +47,4 @@ class ListStudentsEnrollments(ListAPIView):
 
     serializer_class = ListStudentsEnrollmentsSerializer
     authentication_classes = [BasicAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, DjangoModelPermissions]

@@ -14,3 +14,14 @@ pyyaml
 uritemplate
 pygments
 django-guardian
+
+Faker
+pytz
+six
+sqlparse
+
+django-unfold
+
+## Unknow
+# python-dateutils
+# text-unicode
