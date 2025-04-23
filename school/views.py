@@ -2,15 +2,15 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import ListAPIView
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
+
+from school.permissions import StrictDjangoModelPermissions
 from school.models import Student, Course, Enrollment
 from school.serializer import StudentSerializer, StudentSerializerV2, CourseSerializer, EnrollmentSerializer, ListEnrollmentsStudentsSerializer, ListStudentsEnrollmentsSerializer
 
 
 class StudentViewSet(ModelViewSet):
     queryset = Student.objects.all()
-    # serializer_class = StudentSerializer
-    authentication_classes = [BasicAuthentication]
-    permission_classes = [IsAuthenticated, DjangoModelPermissions]
+    permission_classes = [IsAuthenticated, StrictDjangoModelPermissions]
 
     def get_serializer_class(self):
         if self.request.version == 'v2':
@@ -19,32 +19,29 @@ class StudentViewSet(ModelViewSet):
             return StudentSerializer
 
 
+# API without auth
 class CourseViewSet(ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-    # API without auth
+    permission_classes = []
+    http_method_names = ['get']
 
 
 class EnrollmentViewSet(ModelViewSet):
     queryset = Enrollment.objects.all()
     serializer_class = EnrollmentSerializer
-    authentication_classes = [BasicAuthentication]
-    permission_classes = [IsAuthenticated, DjangoModelPermissions]
 
 
 class ListEnrollmentsStudents(ListAPIView):
+    serializer_class = ListEnrollmentsStudentsSerializer
+
     def get_queryset(self):
         return Enrollment.objects.filter(student_id=self.kwargs['pk'])
 
-    serializer_class = ListEnrollmentsStudentsSerializer
-    authentication_classes = [BasicAuthentication]
-    permission_classes = [IsAuthenticated, DjangoModelPermissions]
-
 
 class ListStudentsEnrollments(ListAPIView):
+    serializer_class = ListStudentsEnrollmentsSerializer
+
     def get_queryset(self):
         return Enrollment.objects.filter(course_id=self.kwargs['pk'])
 
-    serializer_class = ListStudentsEnrollmentsSerializer
-    authentication_classes = [BasicAuthentication]
-    permission_classes = [IsAuthenticated, DjangoModelPermissions]

@@ -36,10 +36,14 @@ emergency() {
 
 student() {
     URL=$BASE_ENDPOINT/school/students/
-    API_USER=$(cat .env | grep API_USER | cut -d = -f2)
-    API_PASS=$(cat .env | grep API_PASS | cut -d = -f2)
-    CREDENTIALS="${API_USER}\:${API_PASS}"
-    echo "Testing student endpoint!! ${URL} ${CREDENTIALS}"
+    API_USER="$(cat .env | grep API_USER | cut -d = -f2 | sed -n '1,1p')"
+    API_PASS="$(cat .env | grep API_PASS | cut -d = -f2 | sed -n '1,1p')"
+    CREDENTIALS="$API_USER:$API_PASS"
+    echo "Testing student endpoint!! ${URL}"
+    echo "${CREDENTIALS}"
+    echo "${API_USER}"
+    echo "${API_PASS}"
+    set -x
     curl -u $CREDENTIALS -i -X GET $URL
 }
 
@@ -47,6 +51,15 @@ course() {
     URL=$BASE_ENDPOINT/school/courses/
     echo "Testing course endpoint!! ${URL}"
     curl -i -X GET $URL
+}
+
+generic_get() {
+    END_POINT=$1
+    CREDENTIALS=$2
+    URL=$BASE_ENDPOINT/$END_POINT
+
+    set -x
+    curl -u $CREDENTIALS -X GET $URL
 }
 
 rescue_point() {
@@ -89,6 +102,7 @@ case $1 in
     "emergency") emergency $2;;
     "student") student $2;;
     "course") course $2;;
+    "gen_get") generic_get $3 $4;;
     "auth") auth $3;;
     *) echo "USAGE: [emergency | guideline | flood | auth | help] [LOCAL | DEV | STAGE | PROD]. $1 *NOT* found!!"
 esac
