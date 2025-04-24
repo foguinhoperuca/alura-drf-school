@@ -7,7 +7,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from school.models import Student, Course, Enrollment
 from school.permissions import StrictDjangoModelPermissions
-from school.serializer import StudentSerializer, StudentSerializerV2, CourseSerializer, EnrollmentSerializer, ListEnrollmentsStudentsSerializer, ListStudentsEnrollmentsSerializer
+from school.serializer import StudentSerializer, StudentSerializerV2, StudentSerializerV3, CourseSerializer, EnrollmentSerializer, ListEnrollmentsStudentsSerializer, ListStudentsEnrollmentsSerializer
 
 
 class StudentViewSet(ModelViewSet):
@@ -17,6 +17,8 @@ class StudentViewSet(ModelViewSet):
     def get_serializer_class(self):
         if self.request.version == 'v2':
             return StudentSerializerV2
+        elif self.request.version == 'v3':
+            return StudentSerializerV3
         else:
             return StudentSerializer
 

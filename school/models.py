@@ -7,6 +7,7 @@ class Student(models.Model):
     cpf = models.CharField(max_length=11)
     birthday = models.DateField()
     mobile = models.CharField(max_length=32, default="")
+    photo = models.ImageField(null=True, blank=True)
 
     def __str__(self):
         return f'{self.name} RG {self.rg} CPF {self.cpf} birthday {self.birthday}'

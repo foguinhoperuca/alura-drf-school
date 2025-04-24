@@ -1,5 +1,7 @@
 from django.urls import path, include
+
 from rest_framework.routers import DefaultRouter
+
 from school.views import StudentViewSet, CourseViewSet, EnrollmentViewSet, ListEnrollmentsStudents, ListStudentsEnrollments
 
 router = DefaultRouter()

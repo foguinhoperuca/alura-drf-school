@@ -53,3 +53,9 @@ class StudentSerializerV2(ModelSerializer):
     class Meta:
         model = Student
         fields = ['id', 'name', 'rg', 'cpf', 'birthday', 'mobile']
+
+
+class StudentSerializerV3(ModelSerializer):
+    class Meta:
+        model = Student
+        fields = ['id', 'name', 'rg', 'cpf', 'birthday', 'mobile', 'photo']
