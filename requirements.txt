@@ -21,6 +21,7 @@ six
 sqlparse
 
 django-unfold
+django-cors-headers
 
 ## Unknow
 # python-dateutils
