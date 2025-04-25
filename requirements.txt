@@ -23,6 +23,9 @@ sqlparse
 django-unfold
 django-cors-headers
 
+django-redis
+djangorestframework-xml
+djangorestframework-yaml
 ## Unknow
 # python-dateutils
 # text-unicode
