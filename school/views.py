@@ -3,7 +3,7 @@ from django.views.decorators.cache import cache_page
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.status import HTTP_201_CREATED
+from rest_framework.status import HTTP_201_CREATED, HTTP_501_NOT_IMPLEMENTED
 from rest_framework.viewsets import ModelViewSet
 
 from django.utils.translation import get_language
@@ -26,8 +26,8 @@ class StudentViewSet(ModelViewSet):
             return StudentSerializer
 
 
-# API without auth
 class CourseViewSet(ModelViewSet):
+    """API without auth"""
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
     permission_classes = []
@@ -45,12 +45,18 @@ class EnrollmentViewSet(ModelViewSet):
 
     def create(self, request):
         serializer = self.serializer_class(data=request.data)
+        print(f'{serializer.is_valid()=}')
+        # print(f'{serializer.errors()=}')  # FIXME not showing errors
+
+        # FIXME whynot is valid()?
         if serializer.is_valid():
             serializer.save()
             response = Response(serializer.data, status=HTTP_201_CREATED)
             response['Location'] = request.build_absolute_uri() + str(serializer.data['id'])
+        else:
+            response = Response(f'Invalid Data!', status=HTTP_501_NOT_IMPLEMENTED)
 
-            return response
+        return response
 
     @method_decorator(cache_page(20))
     def dispatch(self, *args, **kwargs):

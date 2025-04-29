@@ -1,7 +1,7 @@
 import datetime
 import os
 import random
-from typing import List
+from typing import Dict, List, Optional
 
 import django
 from faker import Faker
@@ -16,7 +16,8 @@ from school.models import Course, Enrollment, Student
 
 course_provider: DynamicProvider = DynamicProvider(provider_name='courses', elements=['Python Basic', 'Python Intermmediate', 'Python Advanced', 'Python Specialist', 'Python for Dummies'])
 
-def create_students(total: int) -> None:
+def build_students(total: int) -> List[Student]:
+    students: List[Student] = []
     fake = Faker('pt_BR')
     Faker.seed(10)
     for _ in range(total):
@@ -27,9 +28,13 @@ def create_students(total: int) -> None:
         birthday: datetime.datetime = fake.date_between(start_date='-18y', end_date='today')
         mobile: str = fake.phone_number()
         student: Student = Student(name=name, rg=rg, cpf=cpf_number, birthday=birthday, mobile=mobile)
-        student.save()
+        students.append(student)
 
-def create_courses(total: int) -> None:
+    return students
+
+
+def build_courses(total: int) -> List[Course]:
+    courses: List[Course] = []
     fake = Faker('pt_BR')
     fake.add_provider(course_provider)
     Faker.seed(10)
@@ -38,26 +43,45 @@ def create_courses(total: int) -> None:
         description: str = fake.unique.courses()
         level: str = random.choice('BIE')
         course: Course = Course(course_code=course_code, description=description, level=level)
-        course.save()
+        courses.append(course)
 
-def create_enrollments(enrolled: int) -> None:
-    courses: List[Course] = list(Course.objects.all())
-    students: List[Student] = list(Student.objects.all())
+    return courses
+
+
+def build_enrollments(total: int, courses: Optional[List[Course]] = None, students: Optional[List[Student]] = None) -> List[Enrollment]:
+    enrollments: List[Enrollment] = []
+    if courses is None:
+        courses: List[Course] = list(Course.objects.all())
+
+    if students is None:
+        students: List[Student] = list(Student.objects.all())
 
     for course in courses:
-        sample_students: List[Student] = random.sample(students, enrolled)
+        sample_students: List[Student] = random.sample(students, total)
         for student in sample_students:
             students.remove(student)
             period: str = random.choice('MAN')  # see models.Enrollment.PERIOD
             enrollment: Enrollment = Enrollment(course=course, student=student, period=period)
-            enrollment.save()
+            enrollments.append(enrollment)
+
+    return enrollments
 
 
-print('Creating students')
-create_students(200)
+def persist_entities(entities: List) -> List:
+    persisted_entities: List = []
+    for entity in entities:
+        entity.save()
+        persisted_entities.append(entity)
 
-print('Creating courses')
-create_courses(5)
+    return persisted_entities
 
-print('Creating Enrollments')
-create_enrollments(3)
+
+if __name__ == "__main__":
+    print('Creating students')
+    persist_entities(entities=build_students(total=200))
+
+    print('Creating courses')
+    persist_entities(entities=build_courses(total=5))
+
+    print('Creating Enrollments with dependencies')
+    persist_entities(entities=build_enrollments(total=3))

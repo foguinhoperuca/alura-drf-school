@@ -26,6 +26,20 @@ django-cors-headers
 django-redis
 djangorestframework-xml
 djangorestframework-yaml
+
+#django-admin-honeypot
+git+https://github.com/dmpayton/django-admin-honeypot.git@develop
+
 ## Unknow
 # python-dateutils
 # text-unicode
+
+
+# Dev tools
+coverage
+cx_Freeze
+flake8
+icecream
+mypy
+pylint
+setuptools-version-command
