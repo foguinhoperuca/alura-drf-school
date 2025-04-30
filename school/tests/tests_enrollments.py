@@ -3,11 +3,13 @@ import random
 
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from school.models import Student, Course, Enrollment
 from seeds import build_courses, build_students, build_enrollments, persist_entities
+from school.models import Student, Course, Enrollment
+from school.serializer import EnrollmentSerializer
 
 
 class EnrollmentTestCase(APITestCase):
@@ -112,3 +114,60 @@ class EnrollmentTestCase(APITestCase):
         self.assertEqual(resp.status_code, status.HTTP_204_NO_CONTENT)
         enrollment_persisted: Enrollment = Enrollment.objects.filter(pk=enrollment_01.id)
         self.assertEqual(len(list(enrollment_persisted)), 0)
+
+
+class EnrollmentModelTestCase(TestCase):
+    def setUp(self) -> None:
+        print('Creating students')
+        self.students: List[Student] = persist_entities(entities=build_students(total=200))
+        print('Creating courses')
+        self.courses: List[Course] = persist_entities(entities=build_courses(total=5))
+        print('Creating Enrollments with dependencies')
+        self.enrollments: List[Enrollment] = persist_entities(entities=build_enrollments(total=3))
+
+    def test_create(self) -> None:
+        student: Student = build_students(total=1)[0]
+        student.save()
+        course: Course = build_courses(total=1)[0]
+        course.save()
+
+        enrollment: Enrollment = Enrollment(student=student, course=course, period=random.choice('MAN'))
+        self.assertIsNone(enrollment.id)
+        enrollment.save()
+        self.assertIsNotNone(enrollment.id)
+
+
+class EnrollmentSerializerTestCase(TestCase):
+    def setUp(self) -> None:
+        print('Creating students')
+        self.students: List[Student] = persist_entities(entities=build_students(total=20))
+        print('Creating courses')
+        self.courses: List[Course] = persist_entities(entities=build_courses(total=5))
+        print('Creating Enrollments with dependencies')
+        self.enrollments: List[Enrollment] = persist_entities(entities=build_enrollments(total=3))
+
+        self.enrollment: Enrollment = random.sample(self.enrollments, 1)[0]
+        self.serializer = EnrollmentSerializer(instance=self.enrollment)
+
+    def test_serialized_fields(self) -> None:
+        """Validate if is generating correct serialized data"""
+
+        data: Dict = self.serializer.data
+        self.assertEqual(set(data.keys()), set(['id', 'student', 'course', 'period']))
+        self.assertEqual(data['id'], self.enrollment.id)
+        self.assertEqual(data['student'], self.enrollment.student.id)
+        self.assertEqual(data['course'], self.enrollment.course.id)
+        self.assertEqual(data['period'], self.enrollment.period)
+
+    def test_is_valid(self) -> None:
+        valid_serializer: EnrollmentSerializer = EnrollmentSerializer(data=self.serializer.data)
+        self.assertTrue(valid_serializer.is_valid())
+        self.assertEqual(len(valid_serializer.errors), 0)
+
+        invalid_data: Dict = {
+            'student_id': random.sample(self.students, 1)[0],
+            'course_id': random.sample(self.courses, 1)[0],
+            'period': f'{random.choice("MAN")}'
+        }
+        invalid_serializer: EnrollmentSerializer = EnrollmentSerializer(data=invalid_data)
+        self.assertFalse(invalid_serializer.is_valid())
