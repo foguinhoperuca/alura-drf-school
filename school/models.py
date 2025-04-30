@@ -36,3 +36,6 @@ class Enrollment(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     period = models.CharField(max_length=1, choices=PERIOD, blank=False, null=False, default='M')
+
+    def __str__(self):
+        return f'[{self.id}] Student {self.student} is enrolled in course {self.course} in period {[per[1] for per in Enrollment.PERIOD if per[0] == self.period][0]}'

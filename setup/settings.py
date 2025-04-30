@@ -156,16 +156,17 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'anon': '1000/day'
     },
-    'DEFAULT_PARSER_CLASSES': [
-        'rest_framework.parsers.JSONParser',
-        'rest_framework_xml.parsers.XMLParser',
-        'rest_framework_yaml.parsers.YAMLParser',
-    ],
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework_xml.renderers.XMLRenderer',
-        'rest_framework_yaml.renderers.YAMLRenderer',
-    ],
+    # 'DEFAULT_PARSER_CLASSES': [
+    #     'rest_framework.parsers.JSONParser',
+    #     # 'rest_framework_xml.parsers.XMLParser',
+    #     # 'rest_framework_yaml.parsers.YAMLParser',
+    # ],
+    # 'DEFAULT_RENDERER_CLASSES': [
+    #     'rest_framework.renderers.JSONRenderer',
+    #     # 'rest_framework.renderers.BrowsableAPIRenderer',
+    #     # 'rest_framework_xml.renderers.XMLRenderer',
+    #     # 'rest_framework_yaml.renderers.YAMLRenderer',
+    # ],
 }
 
 # CORS_ORIGIN_ALLOW_ALL = True  # alternative conf
