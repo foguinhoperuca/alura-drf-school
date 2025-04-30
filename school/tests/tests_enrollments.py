@@ -23,12 +23,27 @@ class EnrollmentTestCase(APITestCase):
         self.enrollments: List[Enrollment] = persist_entities(entities=build_enrollments(total=3))
 
     def test_list(self) -> None:
-        """Verify if HTTP GET is working"""
+        """Verify if api can list entities"""
         self.client.force_authenticate(user=self.user)
         resp = self.client.get(self.list_url)
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
 
-    def test_save(self) -> None:
+    def test_get(self) -> None:
+        """Verify if HTTP GET is working"""
+        self.client.force_authenticate(user=self.user)
+        enrollments: List[Enrollment] = self.enrollments
+        enrollment_01: Enrollment = random.sample(self.enrollments, 1)[0]
+        enrollments.remove(enrollment_01)
+        get_url: str = reverse('Enrollments-detail', kwargs={'pk': enrollment_01.id})
+        resp = self.client.get(get_url, format='json')
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+
+        enrollment_retrived: Enrollment = Enrollment.objects.filter(pk=resp.json()['id'])[0]
+        self.assertEqual(enrollment_01.period, enrollment_retrived.period)
+        self.assertEqual(enrollment_01.course, enrollment_retrived.course)
+        self.assertEqual(enrollment_01.student, enrollment_retrived.student)
+
+    def test_post(self) -> None:
         """Verify if saving is working"""
 
         self.client.force_authenticate(user=self.user)
