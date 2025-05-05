@@ -59,15 +59,12 @@ generic_get() {
     URL=$BASE_ENDPOINT/$END_POINT
 
     set -x
-    curl -v -i -H 'Accept-Language: pt-br' -u $CREDENTIALS -X GET $URL
+    # curl -v -i -H 'Accept-Language: pt-br' -u $CREDENTIALS -X GET $URL
+    curl -H 'Accept-Language: pt-br' -u $CREDENTIALS -X GET $URL
     # To test other content type
-    curl -u $CREDENTIALS -H "Accept: application/xml" -X GET $URL/school/students/201/
-    curl -u $CREDENTIALS -H "Accept: application/yaml" -X GET $URL/school/students/201/
+    #curl -u $CREDENTIALS -H "Accept: application/xml" -X GET $URL/school/students/201/
+    #curl -u $CREDENTIALS -H "Accept: application/yaml" -X GET $URL/school/students/201/
     
-}
-
-rescue_point() {
-    echo "TODO implement rescue_point!!"
 }
 
 auth() {

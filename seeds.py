@@ -1,9 +1,11 @@
 import datetime
+import json
 import os
 import random
 from typing import Dict, List, Optional
 
 import django
+from django.core.serializers import serialize
 from faker import Faker
 from faker.providers import DynamicProvider
 from validate_docbr import CPF
@@ -15,6 +17,8 @@ from school.models import Course, Enrollment, Student
 
 
 course_provider: DynamicProvider = DynamicProvider(provider_name='courses', elements=['Python Basic', 'Python Intermmediate', 'Python Advanced', 'Python Specialist', 'Python for Dummies'])
+GENERATED_PREFIX: str = datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
+
 
 def build_students(total: int) -> List[Student]:
     students: List[Student] = []
@@ -76,12 +80,24 @@ def persist_entities(entities: List) -> List:
     return persisted_entities
 
 
+def save_fixtures(entities: List, filename: str) -> None:
+    with open(filename, 'w') as f:
+        serialized_data = json.loads(serialize('json', entities))
+        for entity in serialized_data:
+            entity['fields']['id'] = entity['pk']
+
+        json.dump(serialized_data, f, indent=4)
+
+
 if __name__ == "__main__":
     print('Creating students')
-    persist_entities(entities=build_students(total=200))
+    students: List[Student] = persist_entities(entities=build_students(total=50))
+    save_fixtures(entities=students, filename=f'school/fixtures/generated/{GENERATED_PREFIX}_students.json')
 
     print('Creating courses')
-    persist_entities(entities=build_courses(total=5))
+    courses: List[Course] = persist_entities(entities=build_courses(total=5))
+    save_fixtures(entities=courses, filename=f'school/fixtures/generated/{GENERATED_PREFIX}_courses.json')
 
     print('Creating Enrollments with dependencies')
-    persist_entities(entities=build_enrollments(total=3))
+    enrollments: List[Enrollment] = persist_entities(entities=build_enrollments(total=3))
+    save_fixtures(entities=enrollments, filename=f'school/fixtures/generated/{GENERATED_PREFIX}_enrollments.json')

@@ -30,10 +30,11 @@ djangorestframework-yaml
 #django-admin-honeypot
 git+https://github.com/dmpayton/django-admin-honeypot.git@develop
 
+drf-yasg
+
 ## Unknow
 # python-dateutils
 # text-unicode
-
 
 # Dev tools
 coverage

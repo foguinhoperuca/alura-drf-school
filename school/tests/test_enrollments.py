@@ -17,11 +17,8 @@ class EnrollmentTestCase(APITestCase):
         self.list_url = reverse('Enrollments-list')
         self.user = User.objects.create_superuser("admin")
 
-        print('Creating students')
         self.students: List[Student] = persist_entities(entities=build_students(total=200))
-        print('Creating courses')
         self.courses: List[Course] = persist_entities(entities=build_courses(total=5))
-        print('Creating Enrollments with dependencies')
         self.enrollments: List[Enrollment] = persist_entities(entities=build_enrollments(total=3))
 
     def test_list(self) -> None:
@@ -118,11 +115,8 @@ class EnrollmentTestCase(APITestCase):
 
 class EnrollmentModelTestCase(TestCase):
     def setUp(self) -> None:
-        print('Creating students')
         self.students: List[Student] = persist_entities(entities=build_students(total=200))
-        print('Creating courses')
         self.courses: List[Course] = persist_entities(entities=build_courses(total=5))
-        print('Creating Enrollments with dependencies')
         self.enrollments: List[Enrollment] = persist_entities(entities=build_enrollments(total=3))
 
     def test_create(self) -> None:
@@ -139,11 +133,8 @@ class EnrollmentModelTestCase(TestCase):
 
 class EnrollmentSerializerTestCase(TestCase):
     def setUp(self) -> None:
-        print('Creating students')
         self.students: List[Student] = persist_entities(entities=build_students(total=20))
-        print('Creating courses')
         self.courses: List[Course] = persist_entities(entities=build_courses(total=5))
-        print('Creating Enrollments with dependencies')
         self.enrollments: List[Enrollment] = persist_entities(entities=build_enrollments(total=3))
 
         self.enrollment: Enrollment = random.sample(self.enrollments, 1)[0]

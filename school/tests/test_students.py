@@ -13,7 +13,6 @@ class StudentTestCase(APITestCase):
     def setUp(self) -> None:
         self.list_url = reverse('Students-list')
         self.user = User.objects.create_superuser("admin")
-        print('Creating students')
         self.students: List[Student] = persist_entities(entities=build_students(total=5))
 
     def test_list(self) -> None:

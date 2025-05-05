@@ -1,0 +1,52 @@
+[
+    {
+        "model": "school.course",
+        "pk": 16,
+        "fields": {
+            "course_code": "A89-7",
+            "description": "Python for Dummies",
+            "level": "B",
+            "id": 16
+        }
+    },
+    {
+        "model": "school.course",
+        "pk": 17,
+        "fields": {
+            "course_code": "E62-4",
+            "description": "Python Basic",
+            "level": "I",
+            "id": 17
+        }
+    },
+    {
+        "model": "school.course",
+        "pk": 18,
+        "fields": {
+            "course_code": "D96-2",
+            "description": "Python Specialist",
+            "level": "B",
+            "id": 18
+        }
+    },
+    {
+        "model": "school.course",
+        "pk": 19,
+        "fields": {
+            "course_code": "B32-2",
+            "description": "Python Intermmediate",
+            "level": "I",
+            "id": 19
+        }
+    },
+    {
+        "model": "school.course",
+        "pk": 20,
+        "fields": {
+            "course_code": "A60-4",
+            "description": "Python Advanced",
+            "level": "B",
+            "id": 20
+        }
+    }
+]

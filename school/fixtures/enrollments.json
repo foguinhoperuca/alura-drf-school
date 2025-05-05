@@ -1,0 +1,602 @@
+[
+    {
+        "model": "school.enrollment",
+        "pk": 76,
+        "fields": {
+            "student": 85,
+            "course": 1,
+            "period": "M",
+            "id": 76
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 77,
+        "fields": {
+            "student": 53,
+            "course": 1,
+            "period": "M",
+            "id": 77
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 78,
+        "fields": {
+            "student": 82,
+            "course": 1,
+            "period": "A",
+            "id": 78
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 79,
+        "fields": {
+            "student": 116,
+            "course": 2,
+            "period": "A",
+            "id": 79
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 80,
+        "fields": {
+            "student": 121,
+            "course": 2,
+            "period": "M",
+            "id": 80
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 81,
+        "fields": {
+            "student": 48,
+            "course": 2,
+            "period": "M",
+            "id": 81
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 82,
+        "fields": {
+            "student": 68,
+            "course": 3,
+            "period": "N",
+            "id": 82
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 83,
+        "fields": {
+            "student": 144,
+            "course": 3,
+            "period": "M",
+            "id": 83
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 84,
+        "fields": {
+            "student": 38,
+            "course": 3,
+            "period": "N",
+            "id": 84
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 85,
+        "fields": {
+            "student": 32,
+            "course": 4,
+            "period": "M",
+            "id": 85
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 86,
+        "fields": {
+            "student": 102,
+            "course": 4,
+            "period": "N",
+            "id": 86
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 87,
+        "fields": {
+            "student": 98,
+            "course": 4,
+            "period": "A",
+            "id": 87
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 88,
+        "fields": {
+            "student": 133,
+            "course": 5,
+            "period": "N",
+            "id": 88
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 89,
+        "fields": {
+            "student": 72,
+            "course": 5,
+            "period": "N",
+            "id": 89
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 90,
+        "fields": {
+            "student": 34,
+            "course": 5,
+            "period": "N",
+            "id": 90
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 91,
+        "fields": {
+            "student": 71,
+            "course": 6,
+            "period": "N",
+            "id": 91
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 92,
+        "fields": {
+            "student": 46,
+            "course": 6,
+            "period": "N",
+            "id": 92
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 93,
+        "fields": {
+            "student": 28,
+            "course": 6,
+            "period": "A",
+            "id": 93
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 94,
+        "fields": {
+            "student": 119,
+            "course": 7,
+            "period": "N",
+            "id": 94
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 95,
+        "fields": {
+            "student": 143,
+            "course": 7,
+            "period": "M",
+            "id": 95
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 96,
+        "fields": {
+            "student": 44,
+            "course": 7,
+            "period": "A",
+            "id": 96
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 97,
+        "fields": {
+            "student": 115,
+            "course": 8,
+            "period": "N",
+            "id": 97
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 98,
+        "fields": {
+            "student": 145,
+            "course": 8,
+            "period": "N",
+            "id": 98
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 99,
+        "fields": {
+            "student": 97,
+            "course": 8,
+            "period": "M",
+            "id": 99
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 100,
+        "fields": {
+            "student": 40,
+            "course": 9,
+            "period": "N",
+            "id": 100
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 101,
+        "fields": {
+            "student": 3,
+            "course": 9,
+            "period": "M",
+            "id": 101
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 102,
+        "fields": {
+            "student": 22,
+            "course": 9,
+            "period": "M",
+            "id": 102
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 103,
+        "fields": {
+            "student": 147,
+            "course": 10,
+            "period": "M",
+            "id": 103
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 104,
+        "fields": {
+            "student": 112,
+            "course": 10,
+            "period": "A",
+            "id": 104
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 105,
+        "fields": {
+            "student": 130,
+            "course": 10,
+            "period": "N",
+            "id": 105
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 106,
+        "fields": {
+            "student": 91,
+            "course": 11,
+            "period": "M",
+            "id": 106
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 107,
+        "fields": {
+            "student": 124,
+            "course": 11,
+            "period": "M",
+            "id": 107
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 108,
+        "fields": {
+            "student": 140,
+            "course": 11,
+            "period": "A",
+            "id": 108
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 109,
+        "fields": {
+            "student": 20,
+            "course": 12,
+            "period": "M",
+            "id": 109
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 110,
+        "fields": {
+            "student": 90,
+            "course": 12,
+            "period": "M",
+            "id": 110
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 111,
+        "fields": {
+            "student": 15,
+            "course": 12,
+            "period": "A",
+            "id": 111
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 112,
+        "fields": {
+            "student": 79,
+            "course": 13,
+            "period": "N",
+            "id": 112
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 113,
+        "fields": {
+            "student": 138,
+            "course": 13,
+            "period": "A",
+            "id": 113
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 114,
+        "fields": {
+            "student": 63,
+            "course": 13,
+            "period": "M",
+            "id": 114
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 115,
+        "fields": {
+            "student": 59,
+            "course": 14,
+            "period": "N",
+            "id": 115
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 116,
+        "fields": {
+            "student": 8,
+            "course": 14,
+            "period": "M",
+            "id": 116
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 117,
+        "fields": {
+            "student": 69,
+            "course": 14,
+            "period": "M",
+            "id": 117
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 118,
+        "fields": {
+            "student": 75,
+            "course": 15,
+            "period": "N",
+            "id": 118
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 119,
+        "fields": {
+            "student": 42,
+            "course": 15,
+            "period": "A",
+            "id": 119
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 120,
+        "fields": {
+            "student": 62,
+            "course": 15,
+            "period": "N",
+            "id": 120
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 121,
+        "fields": {
+            "student": 65,
+            "course": 16,
+            "period": "N",
+            "id": 121
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 122,
+        "fields": {
+            "student": 132,
+            "course": 16,
+            "period": "M",
+            "id": 122
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 123,
+        "fields": {
+            "student": 101,
+            "course": 16,
+            "period": "M",
+            "id": 123
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 124,
+        "fields": {
+            "student": 87,
+            "course": 17,
+            "period": "M",
+            "id": 124
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 125,
+        "fields": {
+            "student": 77,
+            "course": 17,
+            "period": "M",
+            "id": 125
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 126,
+        "fields": {
+            "student": 11,
+            "course": 17,
+            "period": "A",
+            "id": 126
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 127,
+        "fields": {
+            "student": 51,
+            "course": 18,
+            "period": "A",
+            "id": 127
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 128,
+        "fields": {
+            "student": 58,
+            "course": 18,
+            "period": "A",
+            "id": 128
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 129,
+        "fields": {
+            "student": 36,
+            "course": 18,
+            "period": "N",
+            "id": 129
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 130,
+        "fields": {
+            "student": 16,
+            "course": 19,
+            "period": "M",
+            "id": 130
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 131,
+        "fields": {
+            "student": 88,
+            "course": 19,
+            "period": "A",
+            "id": 131
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 132,
+        "fields": {
+            "student": 39,
+            "course": 19,
+            "period": "A",
+            "id": 132
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 133,
+        "fields": {
+            "student": 105,
+            "course": 20,
+            "period": "N",
+            "id": 133
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 134,
+        "fields": {
+            "student": 74,
+            "course": 20,
+            "period": "N",
+            "id": 134
+        }
+    },
+    {
+        "model": "school.enrollment",
+        "pk": 135,
+        "fields": {
+            "student": 129,
+            "course": 20,
+            "period": "M",
+            "id": 135
+        }
+    }
+]
