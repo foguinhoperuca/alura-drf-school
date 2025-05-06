@@ -1,0 +1,10 @@
+-r requirements.txt
+
+# Dev tools
+coverage
+cx_Freeze
+flake8
+icecream
+mypy
+pylint
+setuptools-version-command

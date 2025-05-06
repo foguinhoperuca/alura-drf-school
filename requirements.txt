@@ -32,15 +32,8 @@ git+https://github.com/dmpayton/django-admin-honeypot.git@develop
 
 drf-yasg
 
+markdown
+
 ## Unknow
 # python-dateutils
 # text-unicode
-
-# Dev tools
-coverage
-cx_Freeze
-flake8
-icecream
-mypy
-pylint
-setuptools-version-command

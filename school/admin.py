@@ -13,9 +13,9 @@ admin.site.unregister(Group)
 
 
 class Students(ModelAdmin):
-    list_display = ('id', 'name', 'rg', 'cpf', 'birthday')
-    list_display_links = ('id', 'name')
-    search_fields = ('name',)
+    list_display = ('id', 'name', 'rg', 'cpf', 'birthday', 'mobile', 'photo',)
+    list_display_links = ('id', 'name', 'cpf', 'birthday', 'mobile', 'photo',)
+    search_fields = ('name', 'cpf', 'mobile')
     list_per_page = 10
 
 
@@ -47,4 +47,3 @@ class GroupAdmin(BaseGroupAdmin, ModelAdmin):
 admin.site.register(Student, Students)
 admin.site.register(Course, Courses)
 admin.site.register(Enrollment, Enrollments)
-
