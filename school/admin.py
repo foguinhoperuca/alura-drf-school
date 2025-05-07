@@ -13,10 +13,10 @@ admin.site.unregister(Group)
 
 
 class Students(ModelAdmin):
-    list_display = ('id', 'name', 'rg', 'cpf', 'birthday', 'mobile', 'photo',)
-    list_display_links = ('id', 'name', 'cpf', 'birthday', 'mobile', 'photo',)
+    list_display = ('id', 'name', 'rg', 'cpf', 'birthday', 'mobile', 'email', 'photo',)
+    list_display_links = ('id', 'name', 'cpf', 'birthday', 'mobile', 'email', 'photo',)
     search_fields = ('name', 'cpf', 'mobile')
-    list_per_page = 10
+    list_per_page = 25
 
 
 class Courses(ModelAdmin):

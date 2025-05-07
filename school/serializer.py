@@ -20,6 +20,12 @@ class StudentSerializerV3(ModelSerializer):
         fields = ['id', 'name', 'rg', 'cpf', 'birthday', 'mobile', 'photo']
 
 
+class StudentSerializerV4(ModelSerializer):
+    class Meta:
+        model = Student
+        fields = ['id', 'name', 'rg', 'cpf', 'birthday', 'mobile', 'photo', 'email']
+
+
 class CourseSerializer(ModelSerializer):
     class Meta:
         model = Course
@@ -43,9 +49,6 @@ class ListEnrollmentsStudentsSerializer(ModelSerializer):
 
     def get_period(self, obj):
         # FIXME where come from get_period_display
-        print("---------------------------------")
-        print(type(obj))
-        print("---------------------------------")
         return obj.get_period_display()
 
 

@@ -1,4 +1,4 @@
-.phony: clean
+.PHONY: clean
 
 clean:
 	@clear

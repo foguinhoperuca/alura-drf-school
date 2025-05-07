@@ -2,7 +2,7 @@ import datetime
 import json
 import os
 import random
-from typing import Dict, List, Optional
+from typing import List, Optional
 
 import django
 from django.core.serializers import serialize
@@ -13,7 +13,7 @@ from validate_docbr import CPF
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'setup.settings')
 django.setup()
 
-from school.models import Course, Enrollment, Student
+from school.models import Course, Enrollment, Student  # noqa: E402
 
 
 course_provider: DynamicProvider = DynamicProvider(provider_name='courses', elements=['Python Basic', 'Python Intermmediate', 'Python Advanced', 'Python Specialist', 'Python for Dummies'])
@@ -31,7 +31,9 @@ def build_students(total: int) -> List[Student]:
         cpf_number: str = cpf.generate()
         birthday: datetime.datetime = fake.date_between(start_date='-18y', end_date='today')
         mobile: str = fake.phone_number()
-        student: Student = Student(name=name, rg=rg, cpf=cpf_number, birthday=birthday, mobile=mobile)
+        photo: Optional[str] = None
+        email = fake.email()
+        student: Student = Student(name=name, rg=rg, cpf=cpf_number, birthday=birthday, mobile=mobile, photo=photo, email=email)
         students.append(student)
 
     return students
@@ -45,7 +47,7 @@ def build_courses(total: int) -> List[Course]:
     for _ in range(total):
         course_code: str = f'{random.choice("ABCDEF")}{random.randrange(10, 99)}-{random.randrange(0, 9)}'
         description: str = fake.unique.courses()
-        level: str = random.choice('BIE')
+        level: str = random.choice([e.name for e in Course.Level])
         course: Course = Course(course_code=course_code, description=description, level=level)
         courses.append(course)
 
@@ -64,7 +66,7 @@ def build_enrollments(total: int, courses: Optional[List[Course]] = None, studen
         sample_students: List[Student] = random.sample(students, total)
         for student in sample_students:
             students.remove(student)
-            period: str = random.choice('MAN')  # see models.Enrollment.PERIOD
+            period: str = random.choice([e.name for e in Enrollment.Period])
             enrollment: Enrollment = Enrollment(course=course, student=student, period=period)
             enrollments.append(enrollment)
 

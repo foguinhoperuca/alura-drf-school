@@ -10,7 +10,7 @@ from django.utils.translation import get_language
 
 from school.models import Student, Course, Enrollment
 from school.permissions import StrictDjangoModelPermissions
-from school.serializer import StudentSerializer, StudentSerializerV2, StudentSerializerV3, CourseSerializer, EnrollmentSerializer, ListEnrollmentsStudentsSerializer, ListStudentsEnrollmentsSerializer
+from school.serializer import CourseSerializer, EnrollmentSerializer, ListEnrollmentsStudentsSerializer, ListStudentsEnrollmentsSerializer, StudentSerializer, StudentSerializerV2, StudentSerializerV3, StudentSerializerV4 
 
 
 class StudentViewSet(ModelViewSet):
@@ -18,12 +18,16 @@ class StudentViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated, StrictDjangoModelPermissions]
 
     def get_serializer_class(self):
-        if self.request.version == 'v2':
+        if self.request.version == 'v1':
+            return StudentSerializer
+        elif self.request.version == 'v2':
             return StudentSerializerV2
         elif self.request.version == 'v3':
             return StudentSerializerV3
+        elif self.request.version == 'v4':
+            return StudentSerializerV4
         else:
-            return StudentSerializer
+            return StudentSerializerV4
 
 
 class CourseViewSet(ModelViewSet):
