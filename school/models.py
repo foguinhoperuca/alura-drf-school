@@ -41,4 +41,4 @@ class Enrollment(models.Model):
     period = models.CharField(max_length=16, choices=tuple((e.name, e.value) for e in Period), blank=False, null=False, default=Period.MORNING.name)
 
     def __str__(self):
-        return f'[{self.id}] Student {self.student} is enrolled in course {self.course} in period {[per[1] for per in Enrollment.PERIOD if per[0] == self.period][0]}'
+        return f'[{self.id}] Student {self.student} is enrolled in course {self.course} in period {Enrollment.Period[self.period].value}'
