@@ -30,33 +30,23 @@ emergency() {
          -F "acamados=0" \
          -F "animais=0" \
          -F "beira_corrego=false" \
-         -F "geom={\"type\": \"Point\", \"coordinates\": [-46.625290, -23.533773]}" \
          $ENV_ENDPOINT
 }
 
 student() {
-    URL=$BASE_ENDPOINT/school/students/
-    API_USER="$(cat .env | grep API_USER | cut -d = -f2 | sed -n '1,1p')"
-    API_PASS="$(cat .env | grep API_PASS | cut -d = -f2 | sed -n '1,1p')"
-    CREDENTIALS="$API_USER:$API_PASS"
-    echo "Testing student endpoint!! ${URL}"
-    echo "${CREDENTIALS}"
-    echo "${API_USER}"
-    echo "${API_PASS}"
-    set -x
-    curl -u $CREDENTIALS -i -X GET $URL
+    #URL=$BASE_ENDPOINT/school/students/
+    #set -x
+    #curl -i -H 'Accept-Language: pt-br' -u $CREDENTIALS -X GET $URL
+
+    generic_get "school/students/"
 }
 
 course() {
-    URL=$BASE_ENDPOINT/school/courses/
-    echo "Testing course endpoint!! ${URL}"
-    curl -i -X GET $URL
+    generic_get "school/courses/"
 }
 
 generic_get() {
-    END_POINT=$1
-    CREDENTIALS=$2
-    URL=$BASE_ENDPOINT/$END_POINT
+    URL="$BASE_ENDPOINT/$1"
 
     set -x
     # curl -v -i -H 'Accept-Language: pt-br' -u $CREDENTIALS -X GET $URL
@@ -90,6 +80,10 @@ auth() {
 
     curl -i -X GET $URL -H "$AUTH_HEADER"
 }
+
+API_USER="$(cat .env | grep API_USER | cut -d = -f2 | sed -n '1,1p')"
+API_PASS="$(cat .env | grep API_PASS | cut -d = -f2 | sed -n '1,1p')"
+CREDENTIALS="$API_USER:$API_PASS"
 
 case $2 in
     "LOCAL") BASE_ENDPOINT="http://alura-drf-school-local.sorocaba.sp.gov.br:8000";;

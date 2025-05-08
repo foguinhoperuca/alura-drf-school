@@ -52,13 +52,16 @@ class ListEnrollmentsStudentsSerializer(ModelSerializer):
         return obj.get_period_display()
 
 
-class ListStudentsEnrollmentsSerializer(ModelSerializer):
+class ListCoursesEnrollmentsSerializer(ModelSerializer):
     course = ReadOnlyField(source='course.description')
+    student_id = ReadOnlyField(source='student.id')
     student_name = ReadOnlyField(source='student.name')
     student_cpf = ReadOnlyField(source='student.cpf')
     student_rg = ReadOnlyField(source='student.rg')
     student_birthday = ReadOnlyField(source='student.birthday')
+    student_mobile = ReadOnlyField(source='student.mobile')
+    student_email = ReadOnlyField(source='student.email')
 
     class Meta:
         model = Enrollment
-        fields = ['course', 'student_name', 'student_cpf', 'student_rg', 'student_birthday']
+        fields = ['course', 'student_id', 'student_name', 'student_cpf', 'student_rg', 'student_birthday', 'student_mobile', 'student_email']

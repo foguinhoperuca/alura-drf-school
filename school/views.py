@@ -10,7 +10,7 @@ from django.utils.translation import get_language
 
 from school.models import Student, Course, Enrollment
 from school.permissions import StrictDjangoModelPermissions
-from school.serializer import CourseSerializer, EnrollmentSerializer, ListEnrollmentsStudentsSerializer, ListStudentsEnrollmentsSerializer, StudentSerializer, StudentSerializerV2, StudentSerializerV3, StudentSerializerV4 
+from school.serializer import CourseSerializer, EnrollmentSerializer, ListEnrollmentsStudentsSerializer, ListCoursesEnrollmentsSerializer, StudentSerializer, StudentSerializerV2, StudentSerializerV3, StudentSerializerV4
 
 
 class StudentViewSet(ModelViewSet):
@@ -71,8 +71,8 @@ class ListEnrollmentsStudents(ListAPIView):
         return Enrollment.objects.filter(student_id=self.kwargs['pk'])
 
 
-class ListStudentsEnrollments(ListAPIView):
-    serializer_class = ListStudentsEnrollmentsSerializer
+class ListCoursesEnrollments(ListAPIView):
+    serializer_class = ListCoursesEnrollmentsSerializer
 
     def get_queryset(self):
         return Enrollment.objects.filter(course_id=self.kwargs['pk'])

@@ -2,7 +2,7 @@ from django.urls import path, include
 
 from rest_framework.routers import DefaultRouter
 
-from school.views import StudentViewSet, CourseViewSet, EnrollmentViewSet, ListEnrollmentsStudents, ListStudentsEnrollments
+from school.views import StudentViewSet, CourseViewSet, EnrollmentViewSet, ListEnrollmentsStudents, ListCoursesEnrollments
 
 router = DefaultRouter()
 router.register('students', StudentViewSet, basename='Students')
@@ -12,5 +12,5 @@ router.register('enrollments', EnrollmentViewSet, basename='Enrollments')
 urlpatterns = [
     path('', include(router.urls)),
     path('students/<int:pk>/enrollments/', ListEnrollmentsStudents.as_view()),
-    path('courses/<int:pk>/enrollments/', ListStudentsEnrollments.as_view())
+    path('courses/<int:pk>/enrollments/', ListCoursesEnrollments.as_view())
 ]
