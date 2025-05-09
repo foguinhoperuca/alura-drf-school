@@ -49,7 +49,6 @@ generic_get() {
     URL="$BASE_ENDPOINT/$1"
 
     set -x
-    # curl -v -i -H 'Accept-Language: pt-br' -u $CREDENTIALS -X GET $URL
     curl -H 'Accept-Language: pt-br' -u $CREDENTIALS -X GET $URL
     # To test other content type
     #curl -u $CREDENTIALS -H "Accept: application/xml" -X GET $URL/school/students/201/
