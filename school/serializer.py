@@ -8,8 +8,9 @@ from school.validators import validate_allowed_period
 
 class CustomStudentValidation:
     def validate_name(self, name: str) -> str:
-        if not name.isalpha():
-            raise ValidationError('Name must be alpha!! Len should be more than 3!!')
+        for char in name:
+            if not (char.isalpha() or char.isspace()):
+                raise ValidationError('Name must be alpha (accept space too)!! Len should be more than 3!!')
 
         return name
 
@@ -55,6 +56,12 @@ class EnrollmentSerializer(ModelSerializer):
         model = Enrollment
         exclude = []
 
+    def validate(self, data: Dict[str, Any]) -> Dict[str, Any]:
+        if not validate_allowed_period(period=data['period'], level=data['course'].level, birthday=data['student'].birthday):
+            raise ValidationError(f"A course level {data['course'].level} can'to be taught at period {data['period']} for one under legal age (born at {data['student'].birthday}) - course code: {data['course'].course_code} (#{data['course'].id}) for student {data['student'].name} (#{data['student'].id})")
+
+        return data
+
 
 class ListEnrollmentsStudentsSerializer(ModelSerializer):
     course = ReadOnlyField(source='course.description')
@@ -68,13 +75,6 @@ class ListEnrollmentsStudentsSerializer(ModelSerializer):
     def get_period(self, obj):
         # FIXME where come from get_period_display
         return obj.get_period_display()
-
-    def validate(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        # TODO test it! Review if choices are already validating!
-        if not validate_allowed_period(data['period']):
-            raise ValidationError('Period {data["period"]} is invalid!!')
-
-        return data
 
 
 class ListCoursesEnrollmentsSerializer(ModelSerializer):
