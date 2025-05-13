@@ -3,7 +3,7 @@ from typing import Any, Dict
 
 from rest_framework.serializers import ModelSerializer, ReadOnlyField, SerializerMethodField, ValidationError
 from school.models import Student, Course, Enrollment
-from school.validators import validate_allowed_period
+from school.validators import validate_allowed_period, validate_cpf
 
 
 class CustomStudentValidation:
@@ -13,6 +13,12 @@ class CustomStudentValidation:
                 raise ValidationError('Name must be alpha (accept space too)!! Len should be more than 3!!')
 
         return name
+
+    def validate_cpf(self, cpf: str) -> str:
+        if not validate_cpf(cpf):
+            raise ValidationError(f'CPF {cpf} is invalid!!')
+
+        return cpf
 
 
 class StudentSerializer(ModelSerializer, CustomStudentValidation):

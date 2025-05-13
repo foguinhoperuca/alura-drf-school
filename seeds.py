@@ -29,7 +29,7 @@ def build_students(total: int) -> List[Student]:
         name: str = fake.name()
         rg: str = f'{random.randrange(10, 99)}{random.randrange(100, 999)}{random.randrange(100, 999)}{random.randrange(0, 9)}'
         cpf_number: str = cpf.generate()
-        birthday: datetime.datetime = fake.date_between(start_date='-18y', end_date='today')
+        birthday: datetime.datetime = fake.date_between(start_date='-35y', end_date='today')
         mobile: str = fake.phone_number()
         photo: Optional[str] = None
         email = fake.email()
@@ -93,7 +93,7 @@ def save_fixtures(entities: List, filename: str) -> None:
 
 if __name__ == "__main__":
     print('Creating students')
-    students: List[Student] = persist_entities(entities=build_students(total=50))
+    students: List[Student] = persist_entities(entities=build_students(total=500))
     save_fixtures(entities=students, filename=f'school/fixtures/generated/{GENERATED_PREFIX}_students.json')
 
     print('Creating courses')
@@ -101,5 +101,5 @@ if __name__ == "__main__":
     save_fixtures(entities=courses, filename=f'school/fixtures/generated/{GENERATED_PREFIX}_courses.json')
 
     print('Creating Enrollments with dependencies')
-    enrollments: List[Enrollment] = persist_entities(entities=build_enrollments(total=3))
+    enrollments: List[Enrollment] = persist_entities(entities=build_enrollments(total=10))
     save_fixtures(entities=enrollments, filename=f'school/fixtures/generated/{GENERATED_PREFIX}_enrollments.json')

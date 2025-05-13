@@ -15,20 +15,23 @@ admin.site.unregister(Group)
 class Students(ModelAdmin):
     list_display = ('id', 'name', 'rg', 'cpf', 'birthday', 'mobile', 'email', 'photo',)
     list_display_links = ('id', 'name', 'cpf', 'birthday', 'mobile', 'email', 'photo',)
-    search_fields = ('name', 'cpf', 'mobile')
+    search_fields = ('name', 'cpf',  'rg', 'mobile')
     list_per_page = 25
+    ordering = ('id', 'name', 'birthday')
 
 
 class Courses(ModelAdmin):
     list_display = ('id', 'course_code', 'description')
     list_display_links = ('id', 'course_code')
     search_fields = ('course_code',)
+    ordering = ('id', 'course_code')
 
 
 class Enrollments(ModelAdmin):
     list_display = ('id', 'student', 'course', 'period')
     list_display_links = ('id', 'student', 'course')
     search_fields = ('period',)
+    ordering = ('id', 'period')
 
 
 @admin.register(User)

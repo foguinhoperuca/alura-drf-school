@@ -11,7 +11,7 @@ class Student(models.Model):
     birthday = models.DateField(verbose_name='BDay')
     mobile = models.CharField(max_length=32, default="", verbose_name='Mobile')
     photo = models.ImageField(null=True, blank=True, verbose_name='Photo')
-    email = models.EmailField(max_length=32, null=True, blank=False, verbose_name='E-mail', validators=[MinLengthValidator(13)])
+    email = models.EmailField(max_length=512, null=True, blank=False, verbose_name='E-mail', validators=[MinLengthValidator(13)])
 
     class Meta:
         verbose_name = 'Student'
