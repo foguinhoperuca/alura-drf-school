@@ -15,7 +15,7 @@ admin.site.unregister(Group)
 class Students(ModelAdmin):
     list_display = ('id', 'name', 'rg', 'cpf', 'birthday', 'mobile', 'email', 'photo',)
     list_display_links = ('id', 'name', 'cpf', 'birthday', 'mobile', 'email', 'photo',)
-    search_fields = ('name', 'cpf',  'rg', 'mobile')
+    search_fields = ('name', 'cpf', 'rg', 'mobile')
     list_per_page = 25
     ordering = ('id', 'name', 'birthday')
 

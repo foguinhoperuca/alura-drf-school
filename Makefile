@@ -44,3 +44,8 @@ test-curl:
 	@date
 	./test_endpoint.sh gen_get LOCAL school/courses/ admin:A12345678a | jq
 	@date
+
+ctags:
+	@clear
+	ctags --options=.ctags -R .
+	ctags --options=.ctags -R -e .
