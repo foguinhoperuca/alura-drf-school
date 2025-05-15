@@ -49,3 +49,8 @@ ctags:
 	@clear
 	ctags --options=.ctags -R .
 	ctags --options=.ctags -R -e .
+
+frontend:
+	@clear
+	cd ../official_course/3697-django-frontend
+	docker compose up --build

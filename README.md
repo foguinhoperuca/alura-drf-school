@@ -20,3 +20,10 @@ Is easily to use this project instead of start another one ([aluraflix](https://
 [Formation page can be found here --> Django REST Framework: crie APIs com Python. Aprenda como criar aplicações REST com Python](https://cursos.alura.com.br/formacao-django-rest)
 
 - [Django REST Framework: construindo APIs RESTful do Zero](https://cursos.alura.com.br/course/django-rest-framework-construindo-apis-restful-zero/)
+- [Django REST Framework: trabalhando com validações, paginação, filtros e versionamento em uma API](https://cursos.alura.com.br/course/django-rest-framework-validacoes-paginacao-filtros-versionamento-api)
+- [Django REST Framework: trabalhando com permissões, documentação, limitações, CORS e deploy na AWS](https://cursos.alura.com.br/course/django-rest-framework-permissoes-documentacao-limitacoes-cors-deploy-aws)
+- [Django REST Framework: trabalhando com testes unitários e de integração](https://cursos.alura.com.br/course/django-rest-framework-trabalhando-testes-unitarios-integracao)
+
+## Frontend RepositoryDjango REST Framework: trabalhando com valida??es, pagina??o, filtros e versionamento em uma API
+
+- [App frontDjango REST Framework: trabalhando com testes unit?rios e de integra??oend from course 3697 Django Rest Framework - Alura](git@github.com:alura-cursos/3697-django-frontend.git)

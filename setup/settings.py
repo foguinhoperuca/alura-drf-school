@@ -27,10 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['*']
-
+DEBUG = bool(int(os.getenv("DEBUG", 0)))
 
 # Application definition
 
@@ -189,6 +186,7 @@ REST_FRAMEWORK = {
 # CORS_ORIGIN_ALLOW_ALL = True  # alternative conf
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "http://localhost:8042"
 ]
 
 # Redis conf
