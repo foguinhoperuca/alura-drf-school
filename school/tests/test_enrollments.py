@@ -130,6 +130,13 @@ class EnrollmentModelTestCase(TestCase):
         enrollment.save()
         self.assertIsNotNone(enrollment.id)
 
+    def test_delete(self) -> None:
+        enrollment: Enrollment = Enrollment.objects.get(pk=1)
+        enrollment.delete()
+        control: Enrollment = Enrollment.objects.filter(pk=1)
+
+        self.assertEqual(len(control), 0)
+
 
 class EnrollmentSerializerTestCase(TestCase):
     def setUp(self) -> None:
