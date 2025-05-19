@@ -4,6 +4,7 @@ import random
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.test import TestCase
+from faker import Faker
 from rest_framework import status
 from rest_framework.test import APITestCase
 
@@ -55,7 +56,7 @@ class EnrollmentTestCase(APITestCase):
         data = {
             'student': enrollment_01.student.id,
             'course': enrollment_02.course.id,
-            'period': random.choice('MAN')
+            'period': random.choice([e.name for e in Enrollment.Period])
         }
         resp = self.client.post(self.list_url, data=data, format='json')
         self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
@@ -78,7 +79,7 @@ class EnrollmentTestCase(APITestCase):
         period_old: str = enrollment_01.period
         update_url = reverse('Enrollments-detail', kwargs={'pk': enrollment_01.id})
 
-        periods: List = [e[0] for e in Enrollment.PERIOD]
+        periods: List = [e.name for e in Enrollment.Period]
         periods.remove(enrollment_01.period)
         period_update: str = random.sample(periods, 1)[0]
 
@@ -125,7 +126,7 @@ class EnrollmentModelTestCase(TestCase):
         course: Course = build_courses(total=1)[0]
         course.save()
 
-        enrollment: Enrollment = Enrollment(student=student, course=course, period=random.choice('MAN'))
+        enrollment: Enrollment = Enrollment(student=student, course=course, period=random.choice([e.name for e in Enrollment.Period]))
         self.assertIsNone(enrollment.id)
         enrollment.save()
         self.assertIsNotNone(enrollment.id)
@@ -140,9 +141,9 @@ class EnrollmentModelTestCase(TestCase):
 
 class EnrollmentSerializerTestCase(TestCase):
     def setUp(self) -> None:
-        self.students: List[Student] = persist_entities(entities=build_students(total=20))
+        self.students: List[Student] = persist_entities(entities=build_students(total=30))
         self.courses: List[Course] = persist_entities(entities=build_courses(total=5))
-        self.enrollments: List[Enrollment] = persist_entities(entities=build_enrollments(total=3))
+        self.enrollments: List[Enrollment] = persist_entities(entities=build_enrollments(total=5))
 
         self.enrollment: Enrollment = random.sample(self.enrollments, 1)[0]
         self.serializer = EnrollmentSerializer(instance=self.enrollment)
@@ -158,6 +159,9 @@ class EnrollmentSerializerTestCase(TestCase):
         self.assertEqual(data['period'], self.enrollment.period)
 
     def test_is_valid(self) -> None:
+        fake: Faker = Faker('pt_BR')
+        Faker.seed(33)
+
         valid_serializer: EnrollmentSerializer = EnrollmentSerializer(data=self.serializer.data)
         self.assertTrue(valid_serializer.is_valid())
         self.assertEqual(len(valid_serializer.errors), 0)
@@ -165,7 +169,37 @@ class EnrollmentSerializerTestCase(TestCase):
         invalid_data: Dict = {
             'student_id': random.sample(self.students, 1)[0],
             'course_id': random.sample(self.courses, 1)[0],
-            'period': f'{random.choice("MAN")}'
+            'period': random.choice([e.name for e in Enrollment.Period]),
         }
         invalid_serializer: EnrollmentSerializer = EnrollmentSerializer(data=invalid_data)
         self.assertFalse(invalid_serializer.is_valid())
+        self.assertEqual(len(invalid_serializer.errors), 2)
+        self.assertEqual(invalid_serializer.errors['student'][0].code, 'required')
+        self.assertEqual(invalid_serializer.errors['course'][0].code, 'required')
+
+        invalid_data = {
+            'student': random.sample(self.students, 1)[0],
+            'course': random.sample(self.courses, 1)[0],
+            'period': random.choice([e.name for e in Enrollment.Period]),
+        }
+        invalid_serializer: EnrollmentSerializer = EnrollmentSerializer(data=invalid_data)
+        self.assertFalse(invalid_serializer.is_valid())
+        self.assertEqual(len(invalid_serializer.errors), 2)
+        self.assertEqual(invalid_serializer.errors['student'][0].code, 'incorrect_type')
+        self.assertEqual(invalid_serializer.errors['course'][0].code, 'incorrect_type')
+
+        invalid_student: Student = random.sample(self.students, 1)[0]
+        invalid_student.birthday = fake.date_between(start_date='-17y', end_date='today')
+        invalid_student.save()
+        invalid_course: Course = random.sample(self.courses, 1)[0]
+        invalid_course.level = Course.Level.BASIC.name
+        invalid_course.save()
+        invalid_data = {
+            'student': invalid_student.id,
+            'course': invalid_course.id,
+            'period': 'NIGHT',
+        }
+        invalid_serializer: EnrollmentSerializer = EnrollmentSerializer(data=invalid_data)
+        self.assertFalse(invalid_serializer.is_valid())
+        self.assertEqual(len(invalid_serializer.errors), 1)
+        self.assertEqual(invalid_serializer.errors['non_field_errors'][0].code, 'invalid')

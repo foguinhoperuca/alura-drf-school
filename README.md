@@ -2,6 +2,7 @@
 
 All courses with this project in Alura's platform.
 Course Alura Django Rest Framework for APIs.
+[Deployed at pythonanywhere.com](https://jecampossorocaba.pythonanywhere.com/)
 
 # Old Courses
 
@@ -24,6 +25,10 @@ Is easily to use this project instead of start another one ([aluraflix](https://
 - [Django REST Framework: trabalhando com permissões, documentação, limitações, CORS e deploy na AWS](https://cursos.alura.com.br/course/django-rest-framework-permissoes-documentacao-limitacoes-cors-deploy-aws)
 - [Django REST Framework: trabalhando com testes unitários e de integração](https://cursos.alura.com.br/course/django-rest-framework-trabalhando-testes-unitarios-integracao)
 
-## Frontend RepositoryDjango REST Framework: trabalhando com valida??es, pagina??o, filtros e versionamento em uma API
+## Frontend Repository Django REST Framework: trabalhando com validações, paginação, filtros e versionamento em uma API
 
-- [App frontDjango REST Framework: trabalhando com testes unit?rios e de integra??oend from course 3697 Django Rest Framework - Alura](git@github.com:alura-cursos/3697-django-frontend.git)
+- [App front Django REST Framework: trabalhando com testes unitários e de integrações from course 3697 Django Rest Framework - Alura](git@github.com:alura-cursos/3697-django-frontend.git)
+
+## Integration with React.
+
+- [Django React: construindo uma aplicação de ponta a ponta](https://cursos.alura.com.br/course/django-react-aplicacao-ponta-a-ponta)

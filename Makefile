@@ -54,3 +54,11 @@ frontend:
 	@clear
 	cd ../official_course/3697-django-frontend
 	docker compose up --build
+
+dump-fixture-model:
+	@clear
+	@date
+	@echo "" > school/fixtures/model.json
+	python3 manage.py dumpdata school.course | jq > school/fixtures/model.json
+	@date
+

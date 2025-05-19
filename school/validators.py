@@ -17,7 +17,8 @@ def validate_allowed_period(period: str, level: str, birthday: date) -> bool:
         assert not (Period[period] == Period.NIGHT and Level[level] == Level.BASIC and birthday > date(date.today().year - 18, date.today().month, date.today().day))
     except Exception as e:
         is_valid = False
-        print(f"A course level {Level[level]} can'to be taught at period {Period[period]} for ones under legal age (birthday: {birthday}) - Exception was: {e}")
+        # TODO use a logger instead print
+        # print(f"A course level {Level[level]} can'to be taught at period {Period[period]} for ones under legal age (birthday: {birthday}) - Exception was: {e}")
 
     return is_valid
 

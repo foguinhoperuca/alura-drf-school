@@ -7,6 +7,7 @@ from django.test import TestCase
 from faker import Faker
 from rest_framework import status
 from rest_framework.test import APITestCase
+from validate_docbr import CPF
 
 from school.models import Student
 from school.serializer import StudentSerializer, StudentSerializerV2, StudentSerializerV3, StudentSerializerV4
@@ -17,14 +18,16 @@ class StudentTestCase(APITestCase):
     def setUp(self) -> None:
         self.list_url = reverse('Students-list')
         self.user = User.objects.create_superuser("admin")
-        self.students: List[Student] = persist_entities(entities=build_students(total=5))
+        self.students: List[Student] = persist_entities(entities=build_students(total=20))
 
     def test_list(self) -> None:
         """Verify if HTTP GET is working"""
+        DEFAULT_PAGE_SIZE: int = 10
         self.client.force_authenticate(user=self.user)
         resp = self.client.get(self.list_url)
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(self.students), len(resp.json()))
+        self.assertEqual(DEFAULT_PAGE_SIZE, len(resp.json()['results']))
+        self.assertNotEqual(len(self.students), len(resp.json()['results']), 'Pagination is correct!')
 
 
 class StudentModelTestCase(TestCase):
@@ -106,31 +109,131 @@ class StudentSerializerTestCase(TestCase):
         self.assertEqual(datav4['birthday'], self.entity.birthday.strftime('%Y-%m-%d'))
         self.assertEqual(datav4['mobile'], self.entity.mobile)
         self.assertEqual(datav4['photo'], self.entity.photo)
-        self.assertEqual(datav4['email'], self.entity.mobile)
+        self.assertEqual(datav4['email'], self.entity.email)
 
     def test_is_valid(self) -> None:
-        valid_serializer: StudentSerializer = StudentSerializer(data=self.serializer.data)
+        cpf: CPF = CPF()
+        fake: Faker = Faker('pt_BR')
+        Faker.seed(42)
+        valid_data: Dict = {
+            'name': fake.name(),
+            'rg': f'{random.randrange(10, 99)}{random.randrange(100, 999)}{random.randrange(100, 999)}{random.randrange(0, 9)}',
+            'cpf': cpf.generate(),
+            'birthday': fake.date_between(start_date='-35y', end_date='today'),
+            'mobile': fake.phone_number(),
+            'photo': None,
+            'email': fake.email(),
+        }
+        valid_serializer: StudentSerializerV4 = StudentSerializerV4(data=valid_data)
         self.assertTrue(valid_serializer.is_valid())
         self.assertEqual(len(valid_serializer.errors), 0)
 
-        # # Models
-        # ## name min lenght 3
-        # ## cpf unique
-        # ## email min lenght 3
-        # # Serializer
-        # ## validate_name
-        # ## validate cpf
+        invalid_data: Dict = {
+            'name': fake.name()[0:2],
+            'rg': f'{random.randrange(10, 99)}{random.randrange(100, 999)}{random.randrange(100, 999)}{random.randrange(0, 9)}',
+            'cpf': cpf.generate(),
+            'birthday': fake.date_between(start_date='-35y', end_date='today'),
+            'mobile': fake.phone_number(),
+            'photo': None,
+            'email': fake.email(),
+        }
+        invalid_serializer: StudentSerializerV4 = StudentSerializerV4(data=invalid_data)
+        self.assertFalse(invalid_serializer.is_valid())
+        self.assertEqual(len(invalid_serializer.errors), 1)
+        self.assertEqual(invalid_serializer.errors['name'][0].code, 'min_length')
 
-        fake: Faker = Faker('pt_BR')
-        Faker.seed(76)
+        invalid_data = {
+            'name': fake.name(),
+            'rg': f'{random.randrange(10, 99)}{random.randrange(100, 999)}{random.randrange(100, 999)}{random.randrange(0, 9)}',
+            'cpf': self.entity.cpf,
+            'birthday': fake.date_between(start_date='-35y', end_date='today'),
+            'mobile': fake.phone_number(),
+            'photo': None,
+            'email': fake.email(),
+        }
+        invalid_serializer: StudentSerializerV4 = StudentSerializerV4(data=invalid_data)
+        self.assertFalse(invalid_serializer.is_valid())
+        self.assertEqual(len(invalid_serializer.errors), 1)
+        self.assertEqual(invalid_serializer.errors['cpf'][0].code, 'unique')
+
+        invalid_data = {
+            'name': fake.name(),
+            'rg': f'{random.randrange(10, 99)}{random.randrange(100, 999)}{random.randrange(100, 999)}{random.randrange(0, 9)}',
+            'cpf': cpf.generate(),
+            'birthday': fake.date_between(start_date='-35y', end_date='today'),
+            'mobile': fake.phone_number(),
+            'photo': None,
+            'email': fake.email()[0:4],
+        }
+        invalid_serializer: StudentSerializerV4 = StudentSerializerV4(data=invalid_data)
+        self.assertFalse(invalid_serializer.is_valid())
+        self.assertEqual(len(invalid_serializer.errors), 1)
+        self.assertEqual(invalid_serializer.errors['email'][0].code, 'min_length')
+
+        invalid_data = {
+            'name': 'Lord Sith IV With Number 99',
+            'rg': f'{random.randrange(10, 99)}{random.randrange(100, 999)}{random.randrange(100, 999)}{random.randrange(0, 9)}',
+            'cpf': cpf.generate(),
+            'birthday': fake.date_between(start_date='-35y', end_date='today'),
+            'mobile': fake.phone_number(),
+            'photo': None,
+            'email': fake.email(),
+        }
+        invalid_serializer: StudentSerializerV4 = StudentSerializerV4(data=invalid_data)
+        self.assertFalse(invalid_serializer.is_valid())
+        self.assertEqual(len(invalid_serializer.errors), 1)
+        self.assertEqual(invalid_serializer.errors['name'][0].code, 'invalid')
+        invalid_data = {
+            'name': 'Mr. Jhonny Smith II',
+            'rg': f'{random.randrange(10, 99)}{random.randrange(100, 999)}{random.randrange(100, 999)}{random.randrange(0, 9)}',
+            'cpf': cpf.generate(),
+            'birthday': fake.date_between(start_date='-35y', end_date='today'),
+            'mobile': fake.phone_number(),
+            'photo': None,
+            'email': fake.email(),
+        }
+        invalid_serializer: StudentSerializerV4 = StudentSerializerV4(data=invalid_data)
+        self.assertFalse(invalid_serializer.is_valid())
+        self.assertEqual(len(invalid_serializer.errors), 1)
+        self.assertEqual(invalid_serializer.errors['name'][0].code, 'invalid')
+        invalid_data = {
+            'name': 'Jhon Doe - The Unique',
+            'rg': f'{random.randrange(10, 99)}{random.randrange(100, 999)}{random.randrange(100, 999)}{random.randrange(0, 9)}',
+            'cpf': cpf.generate(),
+            'birthday': fake.date_between(start_date='-35y', end_date='today'),
+            'mobile': fake.phone_number(),
+            'photo': None,
+            'email': fake.email(),
+        }
+        invalid_serializer: StudentSerializerV4 = StudentSerializerV4(data=invalid_data)
+        self.assertFalse(invalid_serializer.is_valid())
+        self.assertEqual(len(invalid_serializer.errors), 1)
+        self.assertEqual(invalid_serializer.errors['name'][0].code, 'invalid')
+
+        invalid_data = {
+            'name': fake.name(),
+            'rg': f'{random.randrange(10, 99)}{random.randrange(100, 999)}{random.randrange(100, 999)}{random.randrange(0, 9)}',
+            'cpf': "012.345.678-91",
+            'birthday': fake.date_between(start_date='-35y', end_date='today'),
+            'mobile': fake.phone_number(),
+            'photo': None,
+            'email': fake.email(),
+        }
+        invalid_serializer: StudentSerializerV4 = StudentSerializerV4(data=invalid_data)
+        self.assertFalse(invalid_serializer.is_valid())
+        self.assertEqual(len(invalid_serializer.errors), 1)
+        self.assertEqual(invalid_serializer.errors['cpf'][0].code, 'invalid')
+
         invalid_data: Dict = {
             'name': fake.name(),
-            'rg': '',
-            'cpf': f'{random.choice("MAN")}',
+            'rg': f'{random.randrange(10, 99)}{random.randrange(100, 999)}{random.randrange(100, 999)}{random.randrange(0, 9)}',
+            'cpf': cpf.generate(),
             'birthday': fake.date_between(start_date='-35y', end_date='today'),
-            'mobile': '',
-            'photo': '',
-            'email': ''
+            'mobile': fake.phone_number(),
+            'photo': fake.file_path(depth=3, absolute=True),
+            'email': fake.email(),
         }
-        invalid_serializer: StudentSerializer = StudentSerializer(data=invalid_data)
+        invalid_serializer: StudentSerializerV4 = StudentSerializerV4(data=invalid_data)
         self.assertFalse(invalid_serializer.is_valid())
+        self.assertEqual(len(invalid_serializer.errors), 1)
+        self.assertEqual(invalid_serializer.errors['photo'][0].code, 'invalid')
