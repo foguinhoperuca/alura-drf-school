@@ -2,7 +2,10 @@
 
 All courses with this project in Alura's platform.
 Course Alura Django Rest Framework for APIs.
-[Deployed at pythonanywhere.com](https://jecampossorocaba.pythonanywhere.com/)
+- [Deployed API at https://jecampossorocaba.pythonanywhere.com/school](https://jecampossorocaba.pythonanywhere.com/school)
+- [Deployed ADMIN (MANAGER) at https://jecampossorocaba.pythonanywhere.com/manager](https://jecampossorocaba.pythonanywhere.com/manager)
+- [Deployed DOC (Swagger) at https://jecampossorocaba.pythonanywhere.com/swagger](https://jecampossorocaba.pythonanywhere.com/swagger)
+- [Deployed DOC (Redoc) at https://jecampossorocaba.pythonanywhere.com/redoc](https://jecampossorocaba.pythonanywhere.com/redoc)
 
 # Old Courses
 
