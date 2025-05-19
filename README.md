@@ -7,6 +7,8 @@ Course Alura Django Rest Framework for APIs.
 - [Deployed DOC (Swagger) at https://jecampossorocaba.pythonanywhere.com/swagger](https://jecampossorocaba.pythonanywhere.com/swagger)
 - [Deployed DOC (Redoc) at https://jecampossorocaba.pythonanywhere.com/redoc](https://jecampossorocaba.pythonanywhere.com/redoc)
 
+Default user admin: admin/A12345678a
+
 # Old Courses
 
 [Formation page can be found here --> Django REST APIs: crie aplicações REST em Python. Descubra como criar aplicações REST com Python](https://cursos.alura.com.br/formacao-django-rest-v162494)
